@@ -1,4 +1,5 @@
 import React from 'react'
+import TodoList from './TodoList'
 
 const itemsList = [
   {
@@ -23,8 +24,6 @@ const itemsList = [
   }
 ]
 
-console.log(itemsList)
-
 export default class App extends React.Component {
   constructor(){
     super()
@@ -33,11 +32,17 @@ export default class App extends React.Component {
     }
   }
 
+  handleInputChange = (e) => {
+    const {name, value} = e.target
+  }
+
+  handleClickComplete = (e) => {
+
+  }
+
   render() {
     return (
-      <div>
-        Todo App
-      </div>
+      <TodoList itemsList={this.state.itemsList} handleInputChange={this.handleInputChange} handleClickComplete={this.handleClickComplete} />
     )
   }
 }
