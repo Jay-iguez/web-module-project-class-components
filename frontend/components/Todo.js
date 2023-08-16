@@ -14,9 +14,10 @@ export default class Todo extends React.Component {
     super()
   }
   render() {
+    const {handleClickComplete} = this.props
     return (
       <StyledItemContainer>
-        <h1>{this.props.item.name}</h1>
+        <h1 onClick={() => {handleClickComplete(this.props.item.name)}}>{this.props.item.name}</h1>
       </StyledItemContainer>
     )
   }

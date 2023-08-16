@@ -1,7 +1,7 @@
 import React from 'react'
 import TodoList from './TodoList'
 
-const itemsList = [
+const items = [
   {
     name: 'Clean room',
     id: Date.now(),
@@ -28,7 +28,7 @@ export default class App extends React.Component {
   constructor(){
     super()
     this.state={
-      itemsList: itemsList
+      itemsList: items
     }
   }
 
@@ -36,8 +36,14 @@ export default class App extends React.Component {
     const {name, value} = e.target
   }
 
-  handleClickComplete = (e) => {
+  handleClickComplete = (name) => {
+    const givenName = name
 
+    this.setState({...this.state, itemsList: this.state.itemsList.map((selected) => {
+      if (selected.name === givenName) return {...selected, completed : !selected.completed}
+      else return selected
+    })})
+   
   }
 
   render() {
