@@ -27,13 +27,33 @@ const items = [
 export default class App extends React.Component {
   constructor(){
     super()
-    this.state={
-      itemsList: items
+    this.state = {
+      itemsList: items,
+      inputItem: ''
     }
   }
 
   handleInputChange = (e) => {
-    const {name, value} = e.target
+    const {value} = e.target
+    this.setState({...this.state, inputItem : value})
+  }
+
+  handleSubmitChange = (e) => {
+    e.preventDefault()
+    const nameOfItem = this.state.inputItem
+    const newItem = {
+      name: nameOfItem,
+      id: Date.now(),
+      completed: false
+    }
+    
+    this.setState(() => ({
+      itemsList : [...this.state.itemsList, newItem],
+      inputItem : ''
+    }))
+
+    //this.setState({...this.state, itemsList : [...this.state.itemsList, newItem]})
+    //this.setState(this.state.inputItem = '')
   }
 
   handleClickComplete = (name) => {
@@ -43,12 +63,28 @@ export default class App extends React.Component {
       if (selected.name === givenName) return {...selected, completed : !selected.completed}
       else return selected
     })})
+  }
+
+  handleClear = (e) => {
+    e.preventDefault()
+    this.setState({...this.setState, itemsList : this.state.itemsList.filter((cleared) => {
+      if (cleared.completed === false) return cleared
+    })})
+
+    console.log('work?')
    
   }
 
   render() {
     return (
-      <TodoList itemsList={this.state.itemsList} handleInputChange={this.handleInputChange} handleClickComplete={this.handleClickComplete} />
+      <TodoList 
+      itemsList={this.state.itemsList} 
+      handleInputChange={this.handleInputChange}
+      taskName={this.state.inputItem} 
+      handleSubmitChange={this.handleSubmitChange}
+      handleClickComplete={this.handleClickComplete}
+      handleClear={this.handleClear}
+      />
     )
   }
 }
